@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Fragment} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { store, counterSlice } from './Store/root';
+import {counter} from './Store/root';
 import './App.css';
 
+const actions = counterSlice.actions;
+
 function App() {
+  //Hooks
+  const counter = useSelector(state => state.count);
+  const dispatch = useDispatch();
+  // console.log(store.getState());
+  // store.dispatch(counter.actions.increment());
+  // console.log(store.getState());
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      count: {counter}
+      <button onClick={() => dispatch(actions.increment())}>+</button>
+      <button onClick={() => dispatch(actions.decrement())}>-</button>
+      <button onClick={() => setTimeout(() => dispatch(actions.decrement()), 5000)}>Async Operation</button>
+    </Fragment>
   );
 }
 
